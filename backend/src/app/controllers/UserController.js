@@ -9,13 +9,14 @@ module.exports = {
   },
   async create(req, res, next) {
     try {
-      const { name, email, password } = req.body;
+      const { name, email, username, password } = req.body;
 
       const passwd = hashSync(password, 8);
 
       const user = await knex('users').insert({
         name,
         email,
+        username,
         password: passwd,
       });
 
@@ -32,7 +33,7 @@ module.exports = {
     
       const { id } = req.params;
     
-      const user = await knex('users').update({
+      await knex('users').update({
         name,
         email
       }).where({ id });
