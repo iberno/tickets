@@ -1,23 +1,17 @@
 const knex = require('../database');
-const { hashSync } = require('bcryptjs');
 
 module.exports = {
   async index(req, res) {
-    const users = await knex('users');
+    const categories = await knex('categories');
     
-    return res.json(users);
+    return res.json(categories);
   },
   async create(req, res, next) {
     try {
-      const { name, email, username, password } = req.body;
+      const { name } = req.body;
 
-      const passwd = hashSync(password, 8);
-
-      await knex('users').insert({
+      await knex('categories').insert({
         name,
-        email,
-        username,
-        password: passwd,
       });
 
       return res.status(201).send()
@@ -29,13 +23,12 @@ module.exports = {
   },
   async update(req, res, next) {
     try {
-      const { name, email } = req.body;
+      const { name } = req.body;
     
       const { id } = req.params;
     
-      await knex('users').update({
+      await knex('categories').update({
         name,
-        email
       }).where({ id });
     
       return res.status(201).send()
@@ -48,7 +41,7 @@ module.exports = {
   async delete(req, res, next) {
     try {
       const { id } = req.params;
-      await knex('users').where({ id }).del()
+      await knex('categories').where({ id }).del()
       return res.send()
 
     } catch (err) {

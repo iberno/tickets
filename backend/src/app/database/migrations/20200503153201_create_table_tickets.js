@@ -6,7 +6,7 @@ exports.up = knex => knex.schema
       .unsigned()
       .references('users.id')
       .onDelete('CASCADE')
-    table.integer('catgegoryId')
+    table.integer('categoryId')
       .unsigned()
       .references('categories.id')
       .onDelete('CASCADE')
